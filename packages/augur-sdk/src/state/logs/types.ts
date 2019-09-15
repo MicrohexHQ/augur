@@ -1,3 +1,5 @@
+import { MarketReportingState } from "../../constants";
+
 export type Address = string;
 export type Bytes32 = string;
 export type PayoutNumerators = string[];
@@ -358,4 +360,25 @@ export interface MarketData extends Log, Doc {
   marketOI: string;
   invalidFilter: boolean;
   liquidity: LiquidityData;
+  hasRecentlyDepletedLiquidity: boolean;
+  finalizationBlockNumber: string;
+  finalizationTime: string;
+  winningPayoutNumerators: string[];
+  reportingState: MarketReportingState;
+  tentativeWinningPayoutNumerators: string[];
+  totalRepStakedInMarket: string;
+  disputeRound: string;
+  nextWindowStartTime: string;
+  nextWindowEndTime: string;
+  pacingOn: boolean;
+}
+
+export interface DisputeDoc extends Log, Doc {
+  payoutNumerators: string[];
+  bondSizeCurrent: string; // current round bond size
+  stakeCurrent: string; // current round stake that's been provided by reporters so far
+  stakeRemaining: string; // stake remaining (bond size - stakeCurrent)
+  tentativeWinning: boolean; // outcome is currently tentative winner
+  totalRepStakedInPayout: string; // total REP across all rounds staked in completed bonds for this payout
+  tentativeWinningOnRound: string; // Indicates that on a particular round this was the tentative winning payout
 }
